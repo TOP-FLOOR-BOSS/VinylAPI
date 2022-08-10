@@ -1,7 +1,7 @@
 const express = require ("express")
-const register = register("./register.js")
-const login = register("./login.js")
-const logout = register("./logout.js")
+const register = require("./register.js")
+const login = require("./login.js")
+const logout = require("./logout.js")
 
 const router = express.Router()
 
