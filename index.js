@@ -39,7 +39,7 @@ router.get('/', (req, res)=> {
 // Get users
 router.get('/users', (req, res)=> {
     let strQry =
-    `SELECT id, firstname, lastname, userRole, email, userpassword
+    `SELECT user_id, user_fullname, user_role, email, user_password
     FROM users`;
     db.query(strQry, (err, results)=> {
         if(err) throw err; 
@@ -55,17 +55,17 @@ router.post('/register',bodyParser.json(),
     // Retrieving data that was sent by the user
     // id, firstname, lastname, email, userpassword, usertype 
     let {
-        firstname, lastname, email, userpassword, 
+        user_fullname, email, user_password, user_role
     } = req.body; 
     // If the userRole is null or empty, set it to "user".
-    if(usertype.length === 0) {
-        if(( usertype.includes() !== 'user' || 
-            usertype.includes() !== 'admin'))
-            usertype = "user";
+    if(user_role.length === 0) {
+        if(( user_role.includes() !== 'user' || 
+            user_role.includes() !== 'admin'))
+            user_role = "user";
     }
     // Check if a user already exists
     let strQry =
-    `SELECT email, userpassword
+    `SELECT email, user_password
     FROM users
     WHERE LOWER(email) = LOWER('${email}')`;
     db.query(strQry, 
@@ -78,15 +78,15 @@ router.post('/register',bodyParser.json(),
             }else {
                 // Encrypting a password
                 // Default value of salt is 10. 
-                userpassword = await hash(userpassword, 10);
+                user_password = await hash(user_password, 10);
                 // Query
                 strQry = 
                 `
-                INSERT INTO users(firstname, lastname, email, userpassword, )
+                INSERT INTO users(user_fullname, email, user_password, user_role)
                 VALUES(?, ?, ?, ?);
                 `;
                 db.query(strQry, 
-                    [firstname, lastname, email, userpassword],
+                    [user_fullname, email, user_password, user_role],
                     (err, results)=> {
                         if(err)
                            throw err;
@@ -102,7 +102,7 @@ router.post('/register',bodyParser.json(),
 router.post('/login', bodyParser.json(),
     (req, res)=> {
     // Get email and password
-    const { email, userpassword } = req.body;
+    const { email, user_password } = req.body;
     // console.log(userpassword);
     const strQry = 
     `
@@ -120,8 +120,8 @@ router.post('/login', bodyParser.json(),
             );
         }
         // Authenticating a user
-        await compare(userpassword, 
-            results[0].userpassword,
+        await compare(user_password, 
+            results[0].user_password,
             (cmpErr, cmpResults)=> {
             if(cmpErr) {
                 res.status(401).json(
@@ -136,9 +136,7 @@ router.post('/login', bodyParser.json(),
                 jwt.sign(
                     {
                         id: results[0].id,
-                        firstname: results[0].firstname,
-                        lastname: results[0].lastname,
-                        
+                        user_fullname: results[0].user_fullname,
                         email: results[0].email
                     },
                     process.env.TOKEN_KEY, 
@@ -159,14 +157,14 @@ router.post('/login', bodyParser.json(),
     })
 })
 // Create new products
-/*router.post('/products', bodyParser.json(), 
+router.post('/products', bodyParser.json(), 
     (req, res)=> {
     const bd = req.body; 
     bd.totalamount = bd.quantity * bd.price;
     // Query
     const strQry = 
     `
-    INSERT INTO products(prodName, prodUrl, quantity, price, totalamount, dateCreated)
+    INSERT INTO products(title, product_description, img, quantity, price, totalamount, dateCreated)
     VALUES(?, ?, ?, ?, ?, ?);
     `;
     //
@@ -177,7 +175,6 @@ router.post('/login', bodyParser.json(),
             res.send(`number of affected row/s: ${results.affectedRows}`);
         })
 });
-*/
 // Get all products
 router.get('/products', (req, res)=> {
     // Query
