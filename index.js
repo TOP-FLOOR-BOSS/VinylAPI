@@ -55,7 +55,7 @@ router.post('/register',bodyParser.json(),
     // Retrieving data that was sent by the user
     // id, firstname, lastname, email, userpassword, usertype 
     let {
-        firstname, lastname, email, userpassword, usertype
+        firstname, lastname, email, userpassword, 
     } = req.body; 
     // If the userRole is null or empty, set it to "user".
     if(usertype.length === 0) {
@@ -82,11 +82,11 @@ router.post('/register',bodyParser.json(),
                 // Query
                 strQry = 
                 `
-                INSERT INTO users(firstname, lastname, email, userpassword, usertype)
-                VALUES(?, ?, ?, ?, ?);
+                INSERT INTO users(firstname, lastname, email, userpassword, )
+                VALUES(?, ?, ?, ?);
                 `;
                 db.query(strQry, 
-                    [firstname, lastname, email, userpassword, usertype],
+                    [firstname, lastname, email, userpassword],
                     (err, results)=> {
                         if(err)
                            throw err;
@@ -159,7 +159,7 @@ router.post('/login', bodyParser.json(),
     })
 })
 // Create new products
-router.post('/products', bodyParser.json(), 
+/*router.post('/products', bodyParser.json(), 
     (req, res)=> {
     const bd = req.body; 
     bd.totalamount = bd.quantity * bd.price;
@@ -177,6 +177,7 @@ router.post('/products', bodyParser.json(),
             res.send(`number of affected row/s: ${results.affectedRows}`);
         })
 });
+*/
 // Get all products
 router.get('/products', (req, res)=> {
     // Query
