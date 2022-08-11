@@ -164,12 +164,12 @@ router.post('/products', bodyParser.json(),
     // Query
     const strQry = 
     `
-    INSERT INTO products(title, product_description, img, quantity, price, totalamount, dateCreated)
-    VALUES(?, ?, ?, ?, ?, ?);
+    INSERT INTO products(title, genre,  product_description, img, img2, img3, price, quantity)
+    VALUES(?, ?, ?, ?, ?, ? , ?, ?);
     `;
     //
     db.query(strQry, 
-        [bd.prodName, bd.prodUrl, bd.quantity, bd.price, bd.totalamount, bd.dateCreated],
+        [bd.title, bd.genre, bd.product_description, bd.img, bd.img2, bd.img3, bd.price, bd.quantity],
         (err, results)=> {
             if(err) throw err;
             res.send(`number of affected row/s: ${results.affectedRows}`);
@@ -180,7 +180,7 @@ router.get('/products', (req, res)=> {
     // Query
     const strQry = 
     `
-    SELECT id, prodName,prodUrl, quantity, price, totalamount, dateCreated, userid
+    SELECT product_id, prodName,prodUrl, quantity, price, totalamount, dateCreated, userid
     FROM products;
     `;
     db.query(strQry, (err, results)=> {
@@ -197,7 +197,7 @@ router.get('/products/:id', (req, res)=> {
     // Query
     const strQry = 
     `
-    SELECT id, prodName, prodUrl, quantity, price, totalamount, dateCreated, userid
+    SELECT product_id, title, img, quantity, price, totalamount, dateCreated, userid
     FROM products
     WHERE id = ?;
     `;
