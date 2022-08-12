@@ -180,7 +180,7 @@ router.get('/products', (req, res)=> {
     // Query
     const strQry = 
     `
-    SELECT product_id, prodName,prodUrl, quantity, price, totalamount, dateCreated, userid
+    SELECT title, genre,  product_description, img, img2, img3, price, quantity
     FROM products;
     `;
     db.query(strQry, (err, results)=> {
@@ -197,7 +197,7 @@ router.get('/products/:id', (req, res)=> {
     // Query
     const strQry = 
     `
-    SELECT product_id, title, img, quantity, price, totalamount, dateCreated, userid
+    SELECT product_id,title, genre,  product_description, img, img2, img3, price, quantity, created_by
     FROM products
     WHERE id = ?;
     `;
@@ -216,7 +216,7 @@ router.put('/products', (req, res)=> {
     const strQry = 
     `UPDATE products
      SET ?
-     WHERE id = ?`;
+     WHERE created_by = ?`;
 
     db.query(strQry,[bd.id], (err, data)=> {
         if(err) throw err;
@@ -230,7 +230,7 @@ router.delete('/products/:id', (req, res)=> {
     const strQry = 
     `
     DELETE FROM products 
-    WHERE id = ?;
+    WHERE created_by = ?;
     `;
     db.query(strQry,[req.params.id], (err, data, fields)=> {
         if(err) throw err;
