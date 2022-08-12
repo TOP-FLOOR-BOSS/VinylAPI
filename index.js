@@ -186,7 +186,7 @@ router.post("/products", bodyParser.json(), (req, res) => {
 router.get("/products", (req, res) => {
   // Query
   const strQry = `
-    SELECT title, genre,  product_description, img, img2, img3, price, quantity
+    SELECT *
     FROM products;
     `;
   db.query(strQry, (err, results) => {
