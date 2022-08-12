@@ -88,7 +88,6 @@ router.post("/register", bodyParser.json(), (req, res) => {
           [user_fullname, email, user_password, user_role],
           (err, results) => {
             if (err) throw err;
-
             res
               .status(201)
               .json({
