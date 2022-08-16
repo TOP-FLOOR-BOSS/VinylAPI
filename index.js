@@ -26,6 +26,16 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(
+  express.static("public"),
+  router,
+  cors(),
+  express.json(),
+  express.urlencoded({
+    extended: true,
+  })
+);
+
 //
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
