@@ -196,7 +196,9 @@ router.post("/products", bodyParser.json(), (req, res) => {
     ],
     (err, results) => {
       if (err) throw err;
-      res.send(`number of affected row/s: ${results.affectedRows}`);
+      res.json({
+        msg: "Product added, Please refresh"
+      });
     }
   );
 });

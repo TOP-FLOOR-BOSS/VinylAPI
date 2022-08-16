@@ -1,1 +1,10 @@
 GET http://localhost:3000/register;
+###
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "user_fullname": "Peter Henk",
+    "email": "peter@gmail.com",
+    "user_password": "12345"
+}
