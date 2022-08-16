@@ -48,7 +48,20 @@ router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 // Get users
-router.get("/users", (req, res) => {
+// router.get("/users", (req, res) => {
+//   let strQry = `SELECT user_id, user_fullname, user_role, email, user_password
+//     FROM users`;
+//   db.query(strQry, (err, results) => {
+//     if (err) throw err;
+//     res.status(200).json({
+//       results: results,
+//     });
+//   });
+// });
+
+
+// Get users
+router.get("/register", (req, res) => {
   let strQry = `SELECT user_id, user_fullname, user_role, email, user_password
     FROM users`;
   db.query(strQry, (err, results) => {
@@ -58,6 +71,7 @@ router.get("/users", (req, res) => {
     });
   });
 });
+
 // User registration
 router.post("/register", bodyParser.json(), (req, res) => {
   // Retrieving data that was sent by the user
