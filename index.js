@@ -16,17 +16,16 @@ const router = express.Router();
 // Configuration
 const port = parseInt(process.env.PORT) || 4000;
 
-app.use(cors({
-  origin: ['http://127.0.0.1:8080', 'http://localhost:8080'],
-  credentials: true
-}));
-app.use(
-  router,
-  express.json(),
-  express.urlencoded({
-    extended: true,
-  })
-);
+app.use((req, res, next) => {
+  // res.setHeader("Access-Control-Allow-Origin", "*");
+  res.set({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "*",
+    "Access-Control-Allow-Methods": "*",
+  });
+  next();
+});
+
 //
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
@@ -99,10 +98,11 @@ router.post("/login", bodyParser.json(), (req, res) => {
   const strQry = `
     SELECT *
     FROM users 
-    WHERE email = '${email}';
+    WHERE email = '${email}' ;
     `;
   db.query(strQry, async (err, results) => {
     // In case there is an error
+    console.log(results)
     if (err) throw err;
     // When user provide a wrong email
     if (!results.length) {
