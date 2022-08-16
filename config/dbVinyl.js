@@ -13,7 +13,10 @@ let connection;
         multipleStatements: true
     });
     
-
+    connection.connect( (err)=> {
+        if(err) throw err 
+    });
+    
     connection.on('error', (err)=> {
         if(err.code === 'PROTOCOL_CONNECTION_LOST'){
             handleConnection();
