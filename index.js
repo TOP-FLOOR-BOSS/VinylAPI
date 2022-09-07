@@ -276,7 +276,6 @@ app.get("/users/:id/cart", (req, res) => {
 
 app.post("/users/:id/cart", bodyParser.json(), (req, res) => {
   let bd = req.body;
-  console.log(req.params.id);
   let sql = `SELECT cart FROM users WHERE user_id = ${req.params.id}`;
   db.query(
     sql,
