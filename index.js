@@ -16,10 +16,6 @@ const router = express.Router();
 // Configuration
 const port = parseInt(process.env.PORT) || 4000;
 
-app.use(cors({
-  origin: ['http://localhost:8080', 'http://127.0.0.1:8080'],
-  credentials: true
-}))
 app.use((req, res, next) => {
   // res.setHeader("Access-Control-Allow-Origin", "*");
   res.set({
@@ -29,6 +25,11 @@ app.use((req, res, next) => {
   });
   next();
 });
+
+app.use(cors({
+  origin: ['http://localhost:8080', 'http://127.0.0.1:8080'],
+  credentials: true
+}))
 
 app.use(
   express.static("public"),
