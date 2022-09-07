@@ -276,6 +276,7 @@ app.get("/users/:id/cart", (req, res) => {
 
 app.post("/users/:id/cart", bodyParser.json(), (req, res) => {
   let bd = req.body;
+  console.log(req.params.id);
   let sql = `SELECT cart FROM users WHERE user_id = ${req.params.id}`;
   db.query(
     sql,
@@ -312,7 +313,6 @@ app.post("/users/:id/cart", bodyParser.json(), (req, res) => {
   );
 });
 
-
 app.delete("users/:id/cart", bodyParser.json(), (req, res) => {
   let bd = req.body;
   let sql = `UPDATE users SET cart = null WHERE user_id = ${req.params.id}`;
@@ -321,3 +321,4 @@ app.delete("users/:id/cart", bodyParser.json(), (req, res) => {
     if (err) throw errres.send("Cart is empty");
   });
 });
+
